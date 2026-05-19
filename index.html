@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>保険適正額診断ツール｜生命保険・医療保険の必要額を無料計算</title>
+    <meta name="description" content="生命保険・医療保険・就業不能保険の必要額を無料診断。年齢・家族構成・年収・住宅ローンを入力するだけで過剰加入・不足を即チェック。節約できる保険料の目安も計算。">
+    <meta name="keywords" content="生命保険,必要額,計算,医療保険,就業不能保険,保険料,診断,見直し,過剰加入,無料">
+    <link rel="canonical" href="https://appadaycreator.github.io/insurance-calc/">
+    <meta property="og:title" content="保険適正額診断ツール｜生命保険・医療保険の必要額を無料計算">
+    <meta property="og:description" content="生命保険・医療保険・就業不能保険の必要額を無料診断。過剰加入・不足を即チェック。節約できる保険料も計算。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://appadaycreator.github.io/insurance-calc/">
+    <meta property="og:image" content="https://appadaycreator.github.io/assets/ogp-default.png">
+    <meta property="og:site_name" content="保険適正額診断ツール">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="保険適正額診断ツール｜生命保険・医療保険の必要額を無料計算">
+    <meta name="twitter:description" content="生命保険・医療保険の必要額を無料診断。過剰加入・不足を即チェック。">
+    <meta name="twitter:image" content="https://appadaycreator.github.io/assets/ogp-default.png">
+    <!-- GTM -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TXQGZRF9');</script>
+    <!-- Clarity -->
+    <script>(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","s3t9vl8h3v");</script>
+    <!-- AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8427583028015858" crossorigin="anonymous"></script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"WebApplication","name":"保険適正額診断ツール","url":"https://appadaycreator.github.io/insurance-calc/","description":"生命保険・医療保険・就業不能保険の必要額を無料診断。","applicationCategory":"FinanceApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"JPY"}}
+    </script>
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+      {"@type":"Question","name":"生命保険の必要額はどう計算しますか？","acceptedAnswer":{"@type":"Answer","text":"必要保障額 = 遺族の生活費 + 教育費 + 住宅ローン残債 + 葬儀費（200万円）- 遺族年金 - 貯蓄 - 配偶者収入で計算します。子供がいない夫婦や持ち家のない方は必要額が大幅に下がります。"}},
+      {"@type":"Question","name":"医療保険は月日額いくらが適切ですか？","acceptedAnswer":{"@type":"Answer","text":"高額療養費制度があるため、月収500万円以下の方の実質負担は月8.7万円が上限です。差額ベッド代（1日5,000〜20,000円）や生活費補填を考慮すると、日額5,000〜10,000円が目安です。"}},
+      {"@type":"Question","name":"就業不能保険は必要ですか？","acceptedAnswer":{"@type":"Answer","text":"会社員は傷病手当金（月収の2/3・最長18ヶ月）があります。ただし精神疾患や長期の就業不能には不足することが多く、月収の1/3〜1/2の補填を就業不能保険でカバーするのが一般的です。"}},
+      {"@type":"Question","name":"保険料は年収の何%が適切ですか？","acceptedAnswer":{"@type":"Answer","text":"一般的に保険料の目安は手取り年収の5〜10%以内とされています。過剰な保険料は貯蓄や投資に回す余力を奪います。保険は「万一の備え」に絞り、資産形成はNISA・iDeCoで行うのが効率的です。"}}
+    ]}
+    </script>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0;}
+        body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f4ff;color:#1e293b;line-height:1.6;}
+        .header{background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 60%,#a78bfa 100%);color:#fff;padding:20px 16px 0;text-align:center;}
+        .header h1{font-size:clamp(1.1rem,4vw,1.5rem);font-weight:800;margin-bottom:6px;}
+        .header p{font-size:0.82rem;opacity:0.9;margin-bottom:16px;}
+        .tabs{display:flex;background:rgba(0,0,0,0.2);border-radius:12px 12px 0 0;max-width:540px;margin:0 auto;}
+        .tab{flex:1;padding:11px 4px;font-size:0.76em;font-weight:700;color:rgba(255,255,255,0.75);cursor:pointer;border:none;background:none;transition:all .2s;}
+        .tab.active{background:#fff;color:#7c3aed;border-radius:8px 8px 0 0;}
+        .main{max-width:540px;margin:0 auto;padding:0 12px 60px;}
+        .panel{display:none;padding-top:14px;}
+        .panel.active{display:block;}
+        .card{background:#fff;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,0.07);padding:18px;margin-bottom:14px;}
+        .card-title{font-size:0.9rem;font-weight:700;color:#7c3aed;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
+        label{display:block;font-size:0.8rem;font-weight:600;color:#475569;margin-bottom:4px;margin-top:10px;}
+        select,input[type=number],input[type=range]{width:100%;}
+        select,input[type=number]{padding:10px 12px;border:1px solid #ddd6fe;border-radius:9px;font-size:0.88em;background:#f8f4ff;color:#1e293b;outline:none;}
+        select:focus,input[type=number]:focus{border-color:#7c3aed;background:#fff;}
+        input[type=range]{accent-color:#7c3aed;cursor:pointer;}
+        .val-display{font-size:1.3rem;font-weight:800;color:#7c3aed;text-align:center;margin:4px 0;}
+        .btn-calc{width:100%;background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;border:none;border-radius:10px;padding:13px;font-size:0.95rem;font-weight:700;cursor:pointer;margin-top:14px;}
+        .btn-calc:hover{opacity:0.92;}
+        /* 結果 */
+        .result-section{border-radius:12px;padding:16px;margin-bottom:12px;}
+        .result-section.life{background:linear-gradient(135deg,#4c1d95,#7c3aed);color:#fff;}
+        .result-section.medical{background:linear-gradient(135deg,#14532d,#16a34a);color:#fff;}
+        .result-section.disability{background:linear-gradient(135deg,#92400e,#d97706);color:#fff;}
+        .result-section .amount{font-size:1.8rem;font-weight:800;margin:6px 0;}
+        .result-section .label{font-size:0.8em;opacity:0.9;}
+        .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;}
+        .r-box{border-radius:9px;padding:10px;text-align:center;}
+        .r-box.purple{background:#ede9fe;border:1px solid #c4b5fd;} .r-box.purple .val{color:#7c3aed;font-size:1.1rem;font-weight:800;}
+        .r-box.green{background:#f0fdf4;border:1px solid #86efac;} .r-box.green .val{color:#16a34a;font-size:1.1rem;font-weight:800;}
+        .r-box.red{background:#fff1f2;border:1px solid #fca5a5;} .r-box.red .val{color:#dc2626;font-size:1.1rem;font-weight:800;}
+        .r-box.yellow{background:#fefce8;border:1px solid #fde68a;} .r-box.yellow .val{color:#92400e;font-size:1.1rem;font-weight:800;}
+        .r-box .lbl{font-size:0.7em;color:#64748b;margin-top:2px;}
+        /* 判定バッジ */
+        .badge-ok{display:inline-block;background:#16a34a;color:#fff;border-radius:7px;padding:5px 14px;font-size:0.82em;font-weight:700;}
+        .badge-over{display:inline-block;background:#d97706;color:#fff;border-radius:7px;padding:5px 14px;font-size:0.82em;font-weight:700;}
+        .badge-under{display:inline-block;background:#dc2626;color:#fff;border-radius:7px;padding:5px 14px;font-size:0.82em;font-weight:700;}
+        /* 内訳 */
+        .breakdown{font-size:0.82em;color:#475569;}
+        .breakdown-row{display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #f3f0ff;}
+        .breakdown-row:last-child{border:none;}
+        .breakdown-row.minus{color:#dc2626;}
+        .breakdown-row.total{font-weight:700;color:#4c1d95;font-size:0.9em;border-top:2px solid #ddd6fe;margin-top:4px;padding-top:6px;}
+        /* 保険料入力 */
+        .current-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+        .current-row label{margin:0;flex:1;}
+        .current-row input{width:120px;padding:8px;}
+        /* 関連リンク */
+        .related-link{display:block;background:#f8f4ff;border:1px solid #ddd6fe;border-radius:10px;padding:12px;text-decoration:none;color:#7c3aed;font-size:0.85em;font-weight:600;margin-bottom:8px;}
+        .amz-btn{display:inline-block;background:#ff9900;color:#fff;padding:9px 18px;border-radius:8px;font-size:0.83em;font-weight:700;text-decoration:none;margin:4px;}
+        /* 家族構成ボタン */
+        .family-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:6px;}
+        .fam-btn{border:2px solid #ddd6fe;background:#fff;border-radius:9px;padding:10px 4px;text-align:center;cursor:pointer;font-size:0.78em;font-weight:600;color:#64748b;transition:all .15s;}
+        .fam-btn.selected{border-color:#7c3aed;background:#f8f4ff;color:#7c3aed;}
+        .fam-btn .emoji{font-size:1.3em;display:block;margin-bottom:3px;}
+    </style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TXQGZRF9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="header">
+    <h1>🛡️ 保険適正額<br>診断ツール</h1>
+    <p>生命保険・医療保険の必要額を無料計算。過剰加入・不足をチェック。</p>
+    <div class="tabs">
+        <button class="tab active" onclick="switchTab('input',this)">📋 入力</button>
+        <button class="tab" onclick="switchTab('result',this)">📊 診断結果</button>
+        <button class="tab" onclick="switchTab('review',this)">💰 見直し</button>
+        <button class="tab" onclick="switchTab('tips',this)">💡 Tips</button>
+    </div>
+</div>
+
+<div class="main">
+
+<!-- ===== 入力タブ ===== -->
+<div id="panel-input" class="panel active">
+    <div class="card">
+        <div class="card-title">👤 基本情報</div>
+        <label>性別・年齢</label>
+        <div style="display:flex;gap:8px;">
+            <select id="gender" style="flex:1;">
+                <option value="male">男性</option>
+                <option value="female">女性</option>
+            </select>
+            <select id="age" style="flex:1;">
+                <option value="25">25歳</option>
+                <option value="30" selected>30歳</option>
+                <option value="35">35歳</option>
+                <option value="40">40歳</option>
+                <option value="45">45歳</option>
+                <option value="50">50歳</option>
+                <option value="55">55歳</option>
+            </select>
+        </div>
+        <label>家族構成</label>
+        <div class="family-grid">
+            <button class="fam-btn" onclick="selectFamily('single',this)"><span class="emoji">🙋</span>独身</button>
+            <button class="fam-btn" onclick="selectFamily('couple',this)"><span class="emoji">👫</span>夫婦のみ</button>
+            <button class="fam-btn selected" onclick="selectFamily('child1',this)"><span class="emoji">👨‍👩‍👦</span>子1人</button>
+            <button class="fam-btn" onclick="selectFamily('child2',this)"><span class="emoji">👨‍👩‍👦‍👦</span>子2人</button>
+            <button class="fam-btn" onclick="selectFamily('child3',this)"><span class="emoji">👨‍👩‍👧‍👦</span>子3人</button>
+            <button class="fam-btn" onclick="selectFamily('parent',this)"><span class="emoji">👴</span>親の扶養</button>
+        </div>
+        <label>雇用形態</label>
+        <select id="employ">
+            <option value="employee" selected>会社員・公務員</option>
+            <option value="part">パート・アルバイト</option>
+            <option value="self">自営業・フリーランス</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <div class="card-title">💰 収入・資産</div>
+        <label>世帯年収（万円）</label>
+        <input type="range" id="income" min="200" max="1500" step="50" value="500" oninput="updateIncome()">
+        <div class="val-display" id="income-disp">年収 500万円</div>
+        <label>貯蓄・投資残高（万円）</label>
+        <input type="number" id="savings" placeholder="例: 300" min="0" value="200">
+        <label>配偶者の年収（万円・いない場合は0）</label>
+        <input type="number" id="spouse-income" placeholder="例: 300" min="0" value="0">
+    </div>
+
+    <div class="card">
+        <div class="card-title">🏠 住宅・ローン</div>
+        <label>住宅状況</label>
+        <select id="housing">
+            <option value="rent">賃貸</option>
+            <option value="own" selected>持ち家（ローンあり）</option>
+            <option value="own-paid">持ち家（ローン完済）</option>
+        </select>
+        <div id="loan-wrap">
+            <label>住宅ローン残債（万円）</label>
+            <input type="number" id="loan" placeholder="例: 2500" min="0" value="2500">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-title">🛡️ 現在の保険料（任意）</div>
+        <p style="font-size:0.78em;color:#64748b;margin-bottom:10px;">入力すると過剰・不足の判定ができます</p>
+        <div class="current-row"><label>生命保険（死亡）</label><input type="number" id="cur-life" placeholder="月額円" min="0"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
+        <div class="current-row"><label>医療保険</label><input type="number" id="cur-medical" placeholder="月額円" min="0"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
+        <div class="current-row"><label>就業不能保険</label><input type="number" id="cur-disability" placeholder="月額円" min="0"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
+    </div>
+
+    <button class="btn-calc" onclick="calcAndShow()">🔍 保険必要額を診断する</button>
+</div>
+
+<!-- ===== 診断結果タブ ===== -->
+<div id="panel-result" class="panel">
+    <div id="result-area">
+        <div class="card"><p style="text-align:center;color:#94a3b8;padding:20px;">「入力」タブで診断してください。</p></div>
+    </div>
+</div>
+
+<!-- ===== 見直しタブ ===== -->
+<div id="panel-review" class="panel">
+    <div id="review-area">
+        <div class="card"><p style="text-align:center;color:#94a3b8;padding:20px;">診断後に表示されます。</p></div>
+    </div>
+    <div class="card">
+        <div class="card-title">🔗 保険の無料相談（承認待ち・準備中）</div>
+        <div style="background:#f8f4ff;border:1px solid #ddd6fe;border-radius:10px;padding:14px;text-align:center;">
+            <p style="font-size:0.82em;color:#7c3aed;font-weight:700;margin-bottom:6px;">🛡️ プロに無料で相談する</p>
+            <p style="font-size:0.78em;color:#64748b;">保険見直し本舗・マネードクターの無料相談リンクは準備中です。</p>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-title">🔗 関連ツール</div>
+        <a href="https://appadaycreator.github.io/housing-loan-simulator/" class="related-link">🏠 住宅ローン返済シミュレーター</a>
+        <a href="https://appadaycreator.github.io/nisa-ideco-simulator/" class="related-link">📈 新NISA・iDeCo計算機 → 保険料を削減して投資へ</a>
+        <a href="https://appadaycreator.github.io/sidejob-tax-simulator/" class="related-link">💰 副業収入・税金シミュレーター</a>
+    </div>
+</div>
+
+<!-- ===== Tipsタブ ===== -->
+<div id="panel-tips" class="panel">
+    <div class="card">
+        <div class="card-title">💡 保険の賢い見直し6原則</div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f0ff;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>①</span><div><strong>貯蓄型保険は解約を検討</strong>終身保険・学資保険・養老保険は保険料が割高。同額をNISAに回した方が資産形成効率が高い場合がほとんど。</div></div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f0ff;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>②</span><div><strong>高額療養費制度を活用</strong>月の医療費が上限（会社員で約8.7万円）を超えると自動で返金される。医療保険の必要額は意外と少ない。</div></div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f0ff;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>③</span><div><strong>独身者の死亡保険は最小限に</strong>扶養家族がいなければ生命保険（死亡保障）は葬儀費用分（200〜300万円）で十分。掛け捨ての定期保険で安く。</div></div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f0ff;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>④</span><div><strong>子供が独立したら見直す</strong>子供の教育費が確定した後は保障を減らせる。ライフステージに合わせた定期的な見直しが重要。</div></div>
+        <div style="padding:8px 0;border-bottom:1px solid #f3f0ff;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>⑤</span><div><strong>保険料は手取りの5〜10%を目安に</strong>それ以上は過剰。削減した保険料をNISA・iDeCoに回す「保険→投資シフト」が効率的。</div></div>
+        <div style="padding:8px 0;font-size:0.83em;color:#475569;display:flex;gap:8px;"><span>⑥</span><div><strong>自営業は社会保障が薄い</strong>会社員と違い傷病手当金・遺族年金が少ない。就業不能保険と死亡保障は手厚くする必要がある。</div></div>
+    </div>
+    <div class="card" style="text-align:center;">
+        <div class="card-title" style="justify-content:center;">📚 保険・お金の参考書</div>
+        <a href="https://www.amazon.co.jp/s?k=保険+見直し+本+2024&tag=appadaycrea0f-22" target="_blank" rel="noopener noreferrer" class="js-track-affiliate amz-btn" data-platform="Amazon" data-item-name="保険見直し本" data-link-type="affiliate_link">🛡️ 保険見直し入門</a>
+        <a href="https://www.amazon.co.jp/s?k=生命保険+不要+本+真実&tag=appadaycrea0f-22" target="_blank" rel="noopener noreferrer" class="js-track-affiliate amz-btn" data-platform="Amazon" data-item-name="生命保険の真実本" data-link-type="affiliate_link">📗 生命保険の真実</a>
+        <a href="https://www.amazon.co.jp/s?k=お金の正解+保険+NISA&tag=appadaycrea0f-22" target="_blank" rel="noopener noreferrer" class="js-track-affiliate amz-btn" data-platform="Amazon" data-item-name="お金と保険の本" data-link-type="affiliate_link">💰 お金と保険の正解</a>
+    </div>
+    <div class="card">
+        <div class="card-title">❓ よくある質問</div>
+        <details style="margin-bottom:10px;"><summary style="cursor:pointer;font-size:0.88em;font-weight:600;padding:4px 0;">民間医療保険は本当に必要ですか？</summary><p style="font-size:0.8em;color:#475569;padding:8px 0 0 12px;">高額療養費制度があるため、月の医療費は上限を超えると返金されます。貯蓄が200万円以上あれば医療保険なしでも対応できる場合がほとんどです。がん保険・三大疾病保険は長期治療に備えて検討する価値があります。</p></details>
+        <details style="margin-bottom:10px;"><summary style="cursor:pointer;font-size:0.88em;font-weight:600;padding:4px 0;">学資保険より貯蓄の方がいいですか？</summary><p style="font-size:0.8em;color:#475569;padding:8px 0 0 12px;">学資保険の返戻率は105〜110%程度で、同期間NISAで運用した場合の期待リターンを大幅に下回ります。親に万が一のことがあっても保障される点が利点ですが、定期保険＋NISA積立の方が資産形成効率は高いです。</p></details>
+        <details><summary style="cursor:pointer;font-size:0.88em;font-weight:600;padding:4px 0;">保険の無料相談は本当に無料ですか？</summary><p style="font-size:0.8em;color:#475569;padding:8px 0 0 12px;">相談自体は無料ですが、FPや保険代理店のアドバイザーは成約手数料で報酬を得ているため、保険の加入を勧める傾向があります。複数社の提案を比較し、加入は慎重に判断してください。</p></details>
+    </div>
+</div>
+
+</div>
+
+<script>
+let familyType = 'child1';
+
+const FAMILY = {
+    single: { label: '独身', children: 0, hasSpouse: false, eduCost: 0, lifeExpense: 0.6 },
+    couple: { label: '夫婦のみ', children: 0, hasSpouse: true, eduCost: 0, lifeExpense: 0.7 },
+    child1: { label: '子1人', children: 1, hasSpouse: true, eduCost: 1000, lifeExpense: 0.7 },
+    child2: { label: '子2人', children: 2, hasSpouse: true, eduCost: 2000, lifeExpense: 0.7 },
+    child3: { label: '子3人', children: 3, hasSpouse: true, eduCost: 3000, lifeExpense: 0.7 },
+    parent: { label: '親扶養', children: 0, hasSpouse: false, eduCost: 0, lifeExpense: 0.65 },
+};
+
+// 遺族年金（月額概算・万円）
+const SURVIVORS_PENSION = { employee: 12, part: 5, self: 7 };
+
+function selectFamily(type, el) {
+    familyType = type;
+    document.querySelectorAll('.fam-btn').forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+    document.getElementById('loan-wrap').style.display =
+        document.getElementById('housing').value === 'own' ? 'block' : 'none';
+}
+
+function updateIncome() {
+    const v = parseInt(document.getElementById('income').value);
+    document.getElementById('income-disp').textContent = '年収 ' + v + '万円';
+}
+
+document.getElementById('housing').addEventListener('change', function() {
+    document.getElementById('loan-wrap').style.display = this.value === 'own' ? 'block' : 'none';
+});
+
+function fmt(n) { return Math.round(n).toLocaleString(); }
+function fmtW(n) { return Math.round(n / 10000) * 10000 >= 1000000
+    ? (n / 10000).toFixed(0) + '万円'
+    : fmt(Math.round(n / 1000) * 1000) + '円'; }
+function fmtM(n) { return fmt(Math.round(n)) + '万円'; }
+
+function calcAndShow() {
+    const income = parseInt(document.getElementById('income').value);
+    const savings = parseInt(document.getElementById('savings').value) || 0;
+    const spouseIncome = parseInt(document.getElementById('spouse-income').value) || 0;
+    const employ = document.getElementById('employ').value;
+    const housing = document.getElementById('housing').value;
+    const loan = housing === 'own' ? (parseInt(document.getElementById('loan').value) || 0) : 0;
+    const age = parseInt(document.getElementById('age').value);
+    const gender = document.getElementById('gender').value;
+    const fam = FAMILY[familyType];
+
+    const curLife = parseInt(document.getElementById('cur-life').value) || 0;
+    const curMedical = parseInt(document.getElementById('cur-medical').value) || 0;
+    const curDisability = parseInt(document.getElementById('cur-disability').value) || 0;
+
+    // ===== 生命保険（死亡保障）必要額 =====
+    const yearsToRetire = Math.max(0, 65 - age);
+    const monthlyLivingCost = income * 0.7 / 12; // 現在の生活費×0.7
+    const survivorMonths = fam.children > 0 ? Math.max(20, fam.children * 22) * 12 : 20 * 12;
+    const livingCostNeed = monthlyLivingCost * survivorMonths / 10000;
+    const eduCost = fam.eduCost;
+    const funeralCost = 200; // 万円
+    const loanNeed = loan;
+    const monthlyPension = SURVIVORS_PENSION[employ]; // 万円/月
+    const pensionTotal = monthlyPension * survivorMonths / 10000;
+    const spouseEarnings = spouseIncome * Math.max(15, yearsToRetire) * 0.7;
+    const lifeNeed = Math.max(0, livingCostNeed + eduCost + funeralCost + loanNeed - pensionTotal - savings - spouseEarnings);
+
+    // ===== 医療保険必要額 =====
+    // 高額療養費後の自己負担上限（月）
+    const monthlyMedCap = income <= 370 ? 5.7 : income <= 770 ? 8.7 : income <= 1160 ? 17.5 : 25.4; // 万円
+    const avgHospitalDays = 15;
+    const bedFeePerDay = 0.8; // 差額ベッド代（万円/日）
+    const monthlyMedNeed = monthlyMedCap + bedFeePerDay * avgHospitalDays; // 月あたり
+    const medicalNeedMonthly = Math.round(monthlyMedNeed / avgHospitalDays * 10000 / 10000 * 10); // 日額概算
+    const medicalNeedDaily = Math.max(5000, Math.round(monthlyMedNeed * 10000 / avgHospitalDays / 1000) * 1000);
+
+    // ===== 就業不能保険必要額 =====
+    const monthlyIncome = income / 12;
+    const kotekiRate = employ === 'employee' ? 0.67 : employ === 'part' ? 0.3 : 0.1;
+    const kotekiMonthly = monthlyIncome * kotekiRate; // 傷病手当金・障害年金等
+    const disabilityNeedMonthly = Math.max(0, monthlyIncome - kotekiMonthly - spouseIncome / 12);
+    const disabilityNeedTotal = disabilityNeedMonthly * 24; // 2年分
+
+    // ===== 結果表示 =====
+    const lifeJudge = curLife === 0 ? 'none' : curLife * 12 * 30 / 10000 >= lifeNeed * 0.8 && curLife * 12 * 30 / 10000 <= lifeNeed * 1.5 ? 'ok' : curLife * 12 * 30 / 10000 > lifeNeed * 1.5 ? 'over' : 'under';
+
+    document.getElementById('result-area').innerHTML = `
+        <div class="result-section life">
+            <div class="label">生命保険（死亡保障）必要額</div>
+            <div class="amount">${fmtM(lifeNeed)}</div>
+            <div class="label">${fam.label}・年収${income}万円・ローン${loan}万円の場合</div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+            <div class="card-title" style="font-size:0.82em;">📋 内訳</div>
+            <div class="breakdown">
+                <div class="breakdown-row"><span>遺族の生活費（${Math.round(survivorMonths/12)}年分）</span><span>+${fmtM(livingCostNeed)}</span></div>
+                ${eduCost > 0 ? `<div class="breakdown-row"><span>子供の教育費（${fam.children}人分）</span><span>+${fmtM(eduCost)}</span></div>` : ''}
+                <div class="breakdown-row"><span>葬儀費</span><span>+${fmtM(funeralCost)}</span></div>
+                ${loanNeed > 0 ? `<div class="breakdown-row"><span>住宅ローン残債</span><span>+${fmtM(loanNeed)}</span></div>` : ''}
+                <div class="breakdown-row minus"><span>遺族年金（${Math.round(survivorMonths/12)}年分）</span><span>-${fmtM(pensionTotal)}</span></div>
+                <div class="breakdown-row minus"><span>貯蓄・投資</span><span>-${fmtM(savings)}</span></div>
+                ${spouseEarnings > 0 ? `<div class="breakdown-row minus"><span>配偶者収入見込み</span><span>-${fmtM(spouseEarnings)}</span></div>` : ''}
+                <div class="breakdown-row total"><span>必要保障額</span><span>${fmtM(lifeNeed)}</span></div>
+            </div>
+        </div>
+
+        <div class="result-section medical">
+            <div class="label">医療保険 推奨日額</div>
+            <div class="amount">${fmt(medicalNeedDaily)}円/日</div>
+            <div class="label">入院時の差額ベッド代・生活費補填を含む目安</div>
+        </div>
+        <div class="card" style="margin-bottom:14px;">
+            <div class="breakdown">
+                <div class="breakdown-row"><span>月の医療費上限（高額療養費後）</span><span>${monthlyMedCap.toFixed(1)}万円</span></div>
+                <div class="breakdown-row"><span>差額ベッド代（${avgHospitalDays}日分）</span><span>${(bedFeePerDay*avgHospitalDays).toFixed(1)}万円</span></div>
+                <div class="breakdown-row total"><span>推奨日額</span><span>${fmt(medicalNeedDaily)}円/日</span></div>
+            </div>
+            <div style="margin-top:8px;background:#f0fdf4;border-radius:7px;padding:8px;font-size:0.78em;color:#16a34a;">💡 貯蓄が200万円以上あれば医療保険なしも選択肢です。</div>
+        </div>
+
+        <div class="result-section disability">
+            <div class="label">就業不能保険 推奨月額</div>
+            <div class="amount">${fmtM(disabilityNeedMonthly)}/月</div>
+            <div class="label">公的保障（${employ === 'employee' ? '傷病手当金67%' : employ === 'part' ? '約30%' : '約10%'}）を差し引いた不足分</div>
+        </div>
+        <div class="result-grid" style="margin-top:14px;">
+            <div class="r-box purple"><div class="val">${fmtM(lifeNeed)}</div><div class="lbl">生命保険必要額</div></div>
+            <div class="r-box green"><div class="val">${fmt(medicalNeedDaily)}円</div><div class="lbl">医療保険推奨日額</div></div>
+            <div class="r-box yellow"><div class="val">${fmtM(disabilityNeedMonthly)}</div><div class="lbl">就業不能保険/月</div></div>
+            <div class="r-box ${income > 0 ? 'purple' : 'green'}"><div class="val">${fmt(Math.round(income * 0.07 / 12))}円</div><div class="lbl">保険料目安/月（年収7%）</div></div>
+        </div>`;
+
+    // 見直し結果
+    const totalCurrentPremium = curLife + curMedical + curDisability;
+    const targetPremium = Math.round(income * 10000 * 0.07 / 12);
+
+    document.getElementById('review-area').innerHTML = totalCurrentPremium === 0
+        ? `<div class="card"><p style="font-size:0.83em;color:#64748b;text-align:center;padding:12px;">「入力」タブで現在の保険料を入力すると<br>過剰・不足の判定が表示されます。</p></div>`
+        : `<div class="card">
+            <div class="card-title">💰 現在の保険料診断</div>
+            <div style="text-align:center;margin-bottom:14px;">
+                <div style="font-size:0.8em;color:#64748b;margin-bottom:6px;">現在の月額保険料合計</div>
+                <div style="font-size:2rem;font-weight:800;color:#4c1d95;">${fmt(totalCurrentPremium)}円/月</div>
+                <div style="font-size:0.78em;color:#64748b;">${fmtM(totalCurrentPremium * 12 / 10000)}/年</div>
+            </div>
+            <div class="breakdown">
+                <div class="breakdown-row"><span>生命保険</span><span>${fmt(curLife)}円/月</span></div>
+                <div class="breakdown-row"><span>医療保険</span><span>${fmt(curMedical)}円/月</span></div>
+                <div class="breakdown-row"><span>就業不能保険</span><span>${fmt(curDisability)}円/月</span></div>
+                <div class="breakdown-row total"><span>合計</span><span>${fmt(totalCurrentPremium)}円/月</span></div>
+            </div>
+            <div style="margin-top:12px;background:${totalCurrentPremium > targetPremium * 1.3 ? '#fff7ed' : totalCurrentPremium < targetPremium * 0.5 ? '#fff1f2' : '#f0fdf4'};border-radius:8px;padding:12px;text-align:center;">
+                ${totalCurrentPremium > targetPremium * 1.3
+                    ? `<span class="badge-over">⚠️ やや過剰な可能性あり</span><p style="font-size:0.78em;color:#92400e;margin-top:6px;">適正目安: ${fmt(targetPremium)}円/月。月${fmt(totalCurrentPremium - targetPremium)}円の削減余地があります。</p>`
+                    : totalCurrentPremium < targetPremium * 0.5
+                    ? `<span class="badge-under">⚠️ 不足している可能性あり</span><p style="font-size:0.78em;color:#dc2626;margin-top:6px;">適正目安: ${fmt(targetPremium)}円/月。保障の見直しを検討してください。</p>`
+                    : `<span class="badge-ok">✅ おおむね適正範囲</span><p style="font-size:0.78em;color:#16a34a;margin-top:6px;">現在の保険料は年収に対して適正範囲内です。</p>`}
+            </div>
+        </div>`;
+
+    switchTab('result', document.querySelectorAll('.tabs .tab')[1]);
+}
+
+function switchTab(name, el) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    if (el) el.classList.add('active');
+    document.getElementById('panel-'+name).classList.add('active');
+}
+
+document.addEventListener('click', function(e){
+    const el = e.target.closest('.js-track-affiliate');
+    if (!el) return;
+    if (typeof dataLayer !== 'undefined') dataLayer.push({event:'affiliate_click',affiliate_item:el.dataset.itemName,affiliate_platform:el.dataset.platform});
+});
+
+window.onerror = function(msg,src,line){try{console.error('[AppError]',msg,'at',src+':'+line);}catch(e){}return false;};
+window.addEventListener('unhandledrejection',function(e){console.error('[PromiseError]',e.reason);});
+
+document.addEventListener('DOMContentLoaded', function(){
+    updateIncome();
+    var l = document.getElementById('page-loader');
+    if(l){l.style.opacity='0';l.style.transition='opacity 0.3s';setTimeout(function(){l.remove();},350);}
+});
+</script>
+
+<div id="page-loader" style="position:fixed;top:0;left:0;width:100%;height:100%;background:#f8f4ff;z-index:9999;display:flex;align-items:center;justify-content:center;">
+    <div style="width:40px;height:40px;border:4px solid #ddd6fe;border-top-color:#7c3aed;border-radius:50%;animation:spin-loader 0.8s linear infinite;"></div>
+</div>
+<style>@keyframes spin-loader{to{transform:rotate(360deg)}}</style>
+</body>
+</html>
