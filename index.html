@@ -88,7 +88,15 @@
         .fam-btn{border:2px solid #ddd6fe;background:#fff;border-radius:9px;padding:10px 4px;text-align:center;cursor:pointer;font-size:0.78em;font-weight:600;color:#64748b;transition:all .15s;}
         .fam-btn.selected{border-color:#7c3aed;background:#f8f4ff;color:#7c3aed;}
         .fam-btn .emoji{font-size:1.3em;display:block;margin-bottom:3px;}
-    </style>
+    
+/* Phase 8: Mobile Optimization */
+input, select, textarea { font-size: 16px !important; }
+button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min-width: 48px; touch-action: manipulation; }
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .max-w-lg { padding-left: 1rem; padding-right: 1rem; }
+}
+</style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
