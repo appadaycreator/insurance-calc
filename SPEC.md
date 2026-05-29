@@ -3,8 +3,8 @@
 ## 概要
 
 **サービス名**: Insurance Calc
-**バージョン**: 1.0.0
-**更新日**: 2026-05-27
+**バージョン**: 1.1.0
+**更新日**: 2026-05-29
 **URL**: https://appadaycreator.com/insurance-calc/
 
 生命保険・医療保険・就業不能保険の必要額を無料診断。年齢・家族構成・年収・住宅ローンを入力するだけで過剰加入・不足を即チェック。節約できる保険料の目安も計算。
@@ -72,3 +72,4 @@ GitHub Pages（mainブランチ push → 自動デプロイ）
 
 MIT License
 - 2026-05-29: PWA theme-color ブランドカラー統一 (#6366F1→#7c3aed) [improve_auto 横展開]
+- 2026-05-29: v1.1.0 - sr-only CSS修正・年齢範囲拡張(20-70歳)・年収数値直接入力・がん保険/その他保険入力欄追加・lifeJudge判定バッジ表示・コピー/シェアボタン追加・localStorage入力値保存復元 [improve_auto #71]

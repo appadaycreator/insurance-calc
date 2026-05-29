@@ -44,6 +44,7 @@ j=d.createElement(s),dl=l!="dataLayer"?"&l="+l:"";j.async=true;j.src=
     <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"保険の適正額はどうやって計算しますか？","acceptedAnswer":{"@type":"Answer","text":"年収・家族構成・住居形態・既存の保障などをもとに必要保障額を算出します。"}},{"@type":"Question","name":"生命保険はいくらの保障が必要ですか？","acceptedAnswer":{"@type":"Answer","text":"一般的には「遺族に必要な生活費 × 年数 - 社会保障（遺族年金等）- 貯蓄」で計算します。"}},{"@type":"Question","name":"公的保険（社会保険）でまかなえる範囲は？","acceptedAnswer":{"@type":"Answer","text":"遺族年金・高額療養費・障害年金など手厚い保障があります。民間保険はこれを補完するものです。"}},{"@type":"Question","name":"掛け捨てと貯蓄型保険の違いは？","acceptedAnswer":{"@type":"Answer","text":"掛け捨ては保険料が安く保障を重視、貯蓄型は解約返戻金があります。若い世代には掛け捨てが合理的なケースが多いです。"}},{"@type":"Question","name":"何歳で保険を見直すべきですか？","acceptedAnswer":{"@type":"Answer","text":"結婚・出産・住宅購入・子どもの独立などライフイベントのタイミングが見直しの好機です。"}},{"@type":"Question","name":"どのような人が使っていますか？","acceptedAnswer":{"@type":"Answer","text":"初心者から専門家まで、多くの方にご利用いただいています。特に決断が必要な場面で活躍します。"}},{"@type":"Question","name":"結果をシェアできますか？","acceptedAnswer":{"@type":"Answer","text":"はい、診断結果はスクリーンショットやURLで友人・家族とシェアできます。"}},{"@type":"Question","name":"有料プランはありますか？","acceptedAnswer":{"@type":"Answer","text":"いいえ、すべての機能を完全無料でご利用いただけます。"}},{"@type":"Question","name":"計算結果は実際の金融商品に使えますか？","acceptedAnswer":{"@type":"Answer","text":"本ツールは参考情報の提供を目的としており、実際の投資・融資判断には専門家（ファイナンシャルプランナー等）にご相談ください。"}},{"@type":"Question","name":"入力した金額データはどこかに送られますか？","acceptedAnswer":{"@type":"Answer","text":"すべての計算はブラウザ内で完結します。サーバーへのデータ送信は一切行いません。"}}]}</script>
     <style>
         *{box-sizing:border-box;margin:0;padding:0;}
+        .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;}
         body{font-family:'Hiragino Sans','Meiryo',sans-serif;background:#f8f4ff;color:#1e293b;line-height:1.6;}
         .header{background:linear-gradient(135deg,#4c1d95 0%,#7c3aed 60%,#a78bfa 100%);color:#fff;padding:20px 16px 0;text-align:center;}
         .header h1{font-size:clamp(1.1rem,4vw,1.5rem);font-weight:800;margin-bottom:6px;}
@@ -175,7 +176,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
     </div>
 </div>
 
-<div class="main">
+<div class="main" id="main">
 
 <!-- ===== 入力タブ ===== -->
 <div id="panel-input" class="panel active">
@@ -188,6 +189,7 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 <option value="female">女性</option>
             </select>
             <select id="age" style="flex:1;">
+                <option value="20">20歳</option>
                 <option value="25">25歳</option>
                 <option value="30" selected>30歳</option>
                 <option value="35">35歳</option>
@@ -195,6 +197,9 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
                 <option value="45">45歳</option>
                 <option value="50">50歳</option>
                 <option value="55">55歳</option>
+                <option value="60">60歳</option>
+                <option value="65">65歳</option>
+                <option value="70">70歳</option>
             </select>
         </div>
         <label>家族構成</label>
@@ -217,7 +222,11 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
     <div class="card">
         <div class="card-title">💰 収入・資産</div>
         <label>世帯年収（万円）</label>
-        <input type="range" id="income" min="200" max="1500" step="50" value="500" oninput="updateIncome()">
+        <div style="display:flex;align-items:center;gap:8px;">
+            <input type="range" id="income" min="200" max="1500" step="10" value="500" oninput="updateIncome()" style="flex:1;width:auto;">
+            <input type="number" id="income-num" min="200" max="1500" step="10" value="500" oninput="syncIncomeNum()" style="width:90px;padding:8px;border:1px solid #ddd6fe;border-radius:9px;background:#f8f4ff;color:#1e293b;" aria-label="年収を直接入力（万円）">
+            <span style="font-size:0.8em;color:#94a3b8;white-space:nowrap;">万円</span>
+        </div>
         <div class="val-display" id="income-disp">年収 500万円</div>
         <label>貯蓄・投資残高（万円）</label>
         <input type="number" id="savings" placeholder="例: 300" min="0" value="200" aria-label="例: 300">
@@ -245,6 +254,8 @@ button, .btn, .btn-primary, .option-btn, [role="button"] { min-height: 48px; min
         <div class="current-row"><label>生命保険（死亡）</label><input type="number" id="cur-life" placeholder="月額円" min="0" aria-label="月額円"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
         <div class="current-row"><label>医療保険</label><input type="number" id="cur-medical" placeholder="月額円" min="0" aria-label="月額円"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
         <div class="current-row"><label>就業不能保険</label><input type="number" id="cur-disability" placeholder="月額円" min="0" aria-label="月額円"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
+        <div class="current-row"><label>がん保険</label><input type="number" id="cur-cancer" placeholder="月額円" min="0" aria-label="月額円"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
+        <div class="current-row"><label>その他保険</label><input type="number" id="cur-other" placeholder="月額円" min="0" aria-label="月額円"><span style="font-size:0.8em;color:#94a3b8;">円/月</span></div>
     </div>
 
     <button class="btn-calc" onclick="calcAndShow()">🔍 保険必要額を診断する</button>
@@ -325,10 +336,20 @@ function selectFamily(type, el) {
     el.classList.add('selected');
     document.getElementById('loan-wrap').style.display =
         document.getElementById('housing').value === 'own' ? 'block' : 'none';
+    if (typeof saveFormData === 'function') saveFormData();
 }
 
 function updateIncome() {
     const v = parseInt(document.getElementById('income').value);
+    document.getElementById('income-disp').textContent = '年収 ' + v + '万円';
+    var numEl = document.getElementById('income-num');
+    if (numEl) numEl.value = v;
+}
+
+function syncIncomeNum() {
+    let v = parseInt(document.getElementById('income-num').value) || 500;
+    v = Math.max(200, Math.min(1500, v));
+    document.getElementById('income').value = v;
     document.getElementById('income-disp').textContent = '年収 ' + v + '万円';
 }
 
@@ -356,6 +377,8 @@ function calcAndShow() {
     const curLife = parseInt(document.getElementById('cur-life').value) || 0;
     const curMedical = parseInt(document.getElementById('cur-medical').value) || 0;
     const curDisability = parseInt(document.getElementById('cur-disability').value) || 0;
+    const curCancer = parseInt((document.getElementById('cur-cancer') || {}).value) || 0;
+    const curOther = parseInt((document.getElementById('cur-other') || {}).value) || 0;
 
     // ===== 生命保険（死亡保障）必要額 =====
     const yearsToRetire = Math.max(0, 65 - age);
@@ -394,6 +417,7 @@ function calcAndShow() {
             <div class="label">生命保険（死亡保障）必要額</div>
             <div class="amount">${fmtM(lifeNeed)}</div>
             <div class="label">${fam.label}・年収${income}万円・ローン${loan}万円の場合</div>
+            ${lifeJudge !== 'none' ? `<div style="margin-top:10px;text-align:center;">${lifeJudge === 'ok' ? '<span class="badge-ok">✅ 生命保険 適正範囲</span>' : lifeJudge === 'over' ? '<span class="badge-over">⚠️ 生命保険 過剰の可能性</span>' : '<span class="badge-under">⚠️ 生命保険 不足の可能性</span>'}</div>` : ''}
         </div>
         <div class="card" style="margin-bottom:14px;">
             <div class="card-title" style="font-size:0.82em;">📋 内訳</div>
@@ -433,10 +457,16 @@ function calcAndShow() {
             <div class="r-box green"><div class="val">${fmt(medicalNeedDaily)}円</div><div class="lbl">医療保険推奨日額</div></div>
             <div class="r-box yellow"><div class="val">${fmtM(disabilityNeedMonthly)}</div><div class="lbl">就業不能保険/月</div></div>
             <div class="r-box ${income > 0 ? 'purple' : 'green'}"><div class="val">${fmt(Math.round(income * 0.07 / 12))}円</div><div class="lbl">保険料目安/月（年収7%）</div></div>
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;">
+            <button onclick="copyResult()" style="flex:1;background:#7c3aed;color:#fff;border:none;border-radius:9px;padding:10px;font-size:0.82em;font-weight:700;cursor:pointer;min-height:44px;">📋 コピー</button>
+            <button onclick="shareResult('tw')" style="flex:1;background:#000;color:#fff;border:none;border-radius:9px;padding:10px;font-size:0.82em;font-weight:700;cursor:pointer;min-height:44px;">𝕏 シェア</button>
+            <button onclick="shareResult('line')" style="flex:1;background:#06C755;color:#fff;border:none;border-radius:9px;padding:10px;font-size:0.82em;font-weight:700;cursor:pointer;min-height:44px;">LINE</button>
         </div>`;
+    window.lastResultText = '【保険適正額診断結果】\n生命保険必要額: ' + fmtM(lifeNeed) + '\n医療保険推奨日額: ' + fmt(medicalNeedDaily) + '円/日\n就業不能保険: ' + fmtM(disabilityNeedMonthly) + '/月\n保険料目安: ' + fmt(Math.round(income * 0.07 / 12)) + '円/月\nhttps://appadaycreator.com/insurance-calc/';
 
     // 見直し結果
-    const totalCurrentPremium = curLife + curMedical + curDisability;
+    const totalCurrentPremium = curLife + curMedical + curDisability + curCancer + curOther;
     const targetPremium = Math.round(income * 10000 * 0.07 / 12);
 
     document.getElementById('review-area').innerHTML = totalCurrentPremium === 0
@@ -452,6 +482,8 @@ function calcAndShow() {
                 <div class="breakdown-row"><span>生命保険</span><span>${fmt(curLife)}円/月</span></div>
                 <div class="breakdown-row"><span>医療保険</span><span>${fmt(curMedical)}円/月</span></div>
                 <div class="breakdown-row"><span>就業不能保険</span><span>${fmt(curDisability)}円/月</span></div>
+                ${curCancer > 0 ? `<div class="breakdown-row"><span>がん保険</span><span>${fmt(curCancer)}円/月</span></div>` : ''}
+                ${curOther > 0 ? `<div class="breakdown-row"><span>その他保険</span><span>${fmt(curOther)}円/月</span></div>` : ''}
                 <div class="breakdown-row total"><span>合計</span><span>${fmt(totalCurrentPremium)}円/月</span></div>
             </div>
             <div style="margin-top:12px;background:${totalCurrentPremium > targetPremium * 1.3 ? '#fff7ed' : totalCurrentPremium < targetPremium * 0.5 ? '#fff1f2' : '#f0fdf4'};border-radius:8px;padding:12px;text-align:center;">
@@ -464,6 +496,24 @@ function calcAndShow() {
         </div>`;
 
     switchTab('result', document.querySelectorAll('.tabs .tab')[1]);
+}
+
+window.lastResultText = '';
+
+function copyResult() {
+    if (window.lastResultText) {
+        icSafeCopy(window.lastResultText);
+        if (typeof showSuccess === 'function') showSuccess('診断結果をコピーしました！');
+    }
+}
+
+function shareResult(platform) {
+    var text = window.lastResultText || '保険適正額診断ツール https://appadaycreator.com/insurance-calc/';
+    if (platform === 'tw') {
+        window.open('https://twitter.com/intent/tweet?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+    } else if (platform === 'line') {
+        window.open('https://line.me/R/msg/text/?' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+    }
 }
 
 function switchTab(name, el) {
@@ -482,8 +532,52 @@ document.addEventListener('click', function(e){
 window.onerror = function(msg,src,line){try{console.error('[AppError]',msg,'at',src+':'+line);}catch(e){}return false;};
 window.addEventListener('unhandledrejection',function(e){console.error('[PromiseError]',e.reason);});
 
+function saveFormData() {
+    icSafeSet('ic_form_data', {
+        gender: document.getElementById('gender').value,
+        age: document.getElementById('age').value,
+        familyType: familyType,
+        employ: document.getElementById('employ').value,
+        income: document.getElementById('income').value,
+        savings: document.getElementById('savings').value,
+        spouseIncome: (document.getElementById('spouse-income') || {}).value || '',
+        housing: document.getElementById('housing').value,
+        loan: (document.getElementById('loan') || {}).value || '',
+        curLife: (document.getElementById('cur-life') || {}).value || '',
+        curMedical: (document.getElementById('cur-medical') || {}).value || '',
+        curDisability: (document.getElementById('cur-disability') || {}).value || '',
+        curCancer: (document.getElementById('cur-cancer') || {}).value || '',
+        curOther: (document.getElementById('cur-other') || {}).value || ''
+    });
+}
+
 document.addEventListener('DOMContentLoaded', function(){
     updateIncome();
+    var d = icSafeGet('ic_form_data', null);
+    if (d) {
+        if (d.gender) document.getElementById('gender').value = d.gender;
+        if (d.age) document.getElementById('age').value = d.age;
+        if (d.familyType) {
+            var btn = document.querySelector('.fam-btn[onclick*="' + d.familyType + '"]');
+            if (btn) { familyType = d.familyType; document.querySelectorAll('.fam-btn').forEach(function(x){x.classList.remove('selected');}); btn.classList.add('selected'); }
+        }
+        if (d.employ) document.getElementById('employ').value = d.employ;
+        if (d.income) { document.getElementById('income').value = d.income; updateIncome(); }
+        if (d.savings) document.getElementById('savings').value = d.savings;
+        if (d.spouseIncome) document.getElementById('spouse-income').value = d.spouseIncome;
+        if (d.housing) { document.getElementById('housing').value = d.housing; document.getElementById('loan-wrap').style.display = d.housing === 'own' ? 'block' : 'none'; }
+        if (d.loan) document.getElementById('loan').value = d.loan;
+        if (d.curLife) document.getElementById('cur-life').value = d.curLife;
+        if (d.curMedical) document.getElementById('cur-medical').value = d.curMedical;
+        if (d.curDisability) document.getElementById('cur-disability').value = d.curDisability;
+        if (d.curCancer && document.getElementById('cur-cancer')) document.getElementById('cur-cancer').value = d.curCancer;
+        if (d.curOther && document.getElementById('cur-other')) document.getElementById('cur-other').value = d.curOther;
+    }
+    ['gender','age','employ','savings','spouse-income','housing','loan','cur-life','cur-medical','cur-disability','cur-cancer','cur-other'].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) { el.addEventListener('change', saveFormData); el.addEventListener('input', saveFormData); }
+    });
+    document.getElementById('income').addEventListener('input', saveFormData);
     var l = document.getElementById('page-loader');
     if(l){l.style.opacity='0';l.style.transition='opacity 0.3s';setTimeout(function(){l.remove();},350);}
 });
@@ -743,7 +837,7 @@ document.addEventListener('DOMContentLoaded', function(){
           <p style="font-size:.75rem;color:#9ca3af;margin-top:.25rem">— 田中さん（30代・会社員）★★★★★</p>
         </div>
         <div style="background:#f9fafb;border-radius:8px;padding:.75rem">
-          <p style="font-size:.75rem;color:#374151">「無料でここまで詳しく診断できるとは思いませんでした。」</p>
+          <p style="font-size:.75rem;color:#374151">「無料でここまで詳しく調べられるとは思いませんでした。」</p>
           <p style="font-size:.75rem;color:#9ca3af;margin-top:.25rem">— 佐藤さん（40代・主婦）★★★★★</p>
         </div>
         <div style="background:#f9fafb;border-radius:8px;padding:.75rem">
